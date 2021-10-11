@@ -74,6 +74,21 @@ export const StyledTextInput = styled.TextInput`
   margin-bottom: 10px;
   color: ${tertiary};
 `
+export const StartButton = styled.TouchableOpacity`
+  padding: 15px;
+  background-color: ${brand};
+  justify-content: center;
+  border-radius: 5px;
+  height: 60px;
+`
+
+export const ButtonText = styled.Text`
+  color: ${primary};
+  font-size: 16px;
+  text-align: center;
+`
+
+//TextInput
 export const StyledInputLabel = styled.Text`
   color: ${tertiary};
   font-size: 13px;
@@ -92,18 +107,4 @@ export const RightIcon = styled.TouchableOpacity`
   top: 38px;
   position: absolute;
   z-index: 1;
-`
-
-export const StartButton = styled.TouchableOpacity`
-  padding: 15px;
-  background-color: ${brand};
-  justify-content: center;
-  border-radius: 5px;
-  height: 60px;
-`
-
-export const ButtonText = styled.Text`
-  color: ${primary};
-  font-size: 16px;
-  text-align: center;
 `
