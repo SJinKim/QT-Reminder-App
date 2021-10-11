@@ -19,9 +19,11 @@ import {
   LeftIcon,
   RightIcon,
   StyledTextInput,
-  StartButton,
+  StyledButton,
   ButtonText,
   Colors,
+  MessageBox,
+  Line,
 } from '../appStyles/appStyles'
 
 //Colors
@@ -97,9 +99,14 @@ const Login = () => {
                 hidePassword={hidePassword}
                 setHidePassword={setHidePassword}
               />
-              <StartButton onPress={handleSubmit}>
+              <MessageBox>...</MessageBox>
+              <StyledButton onPress={handleSubmit}>
                 <ButtonText>Login</ButtonText>
-              </StartButton>
+              </StyledButton>
+              <Line />
+              <StyledButton onPress={handleSubmit}>
+                <ButtonText>Sign Up</ButtonText>
+              </StyledButton>
             </StyledFormArea>
           )}
         </Formik>
