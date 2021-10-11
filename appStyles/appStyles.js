@@ -1,20 +1,36 @@
 import styled from 'styled-components'
 import Constants from 'expo-constants'
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
 
 const StatusBarHeight = Constants.statusBarHeight
 
 //colors
-export const colors = {
+export const Colors = {
   primary: '#ffffff',
   secondary: '#000000',
+  tertiary: '#1F2937',
+  lightGrey: '#E5E7EB',
+  darkLight: '#9CA3AF',
+  brand: '#6D28D9',
+  green: '#10B981',
+  red: '#EF4444',
 }
+
+const {
+  primary,
+  secondary,
+  tertiary,
+  lightGrey,
+  darkLight,
+  brand,
+  green,
+  red,
+} = Colors
 
 //Login
 export const Container = styled.View`
   flex: 1;
   padding-top: ${StatusBarHeight + 10}px;
-  background-color: ${colors.primary};
+  background-color: ${primary};
   padding: 25px;
 `
 export const InnerContainer = styled.View`
@@ -33,7 +49,7 @@ export const PageTitle = styled.Text`
   font-size: 30px;
   font-weight: bold;
   text-align: center;
-  color: ${colors.secondary};
+  color: ${secondary};
   padding: 10px;
 `
 
@@ -42,5 +58,52 @@ export const SubTitle = styled.Text`
   margin-bottom: 20px;
   letter-spacing: 1px;
   font-weight: bold;
-  color: ${colors.secondary};
+  color: ${secondary};
+`
+export const StyledFormArea = styled.View`
+  width: 90%;
+`
+
+export const StyledTextInput = styled.TextInput`
+  background-color: ${lightGrey};
+  padding: 15px;
+  padding-left: 55px;
+  padding-right: 55px;
+  border-radius: 5px;
+  height: 65px;
+  margin-bottom: 10px;
+  color: ${tertiary};
+`
+export const StyledInputLabel = styled.Text`
+  color: ${tertiary};
+  font-size: 13px;
+  text-align: left;
+`
+
+export const LeftIcon = styled.View`
+  left: 15px;
+  top: 35px;
+  position: absolute;
+  z-index: 1;
+`
+
+export const RightIcon = styled.TouchableOpacity`
+  right: 15px;
+  top: 38px;
+  position: absolute;
+  z-index: 1;
+`
+
+export const StartButton = styled.TouchableOpacity`
+  padding: 15px;
+  background-color: ${brand};
+  justify-content: center;
+  border-radius: 5px;
+  height: 60px;
+`
+
+export const ButtonText = styled.Text`
+  color: ${primary};
+  font-size: 16px;
+  text-align: center;
 `
