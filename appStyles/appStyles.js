@@ -74,7 +74,7 @@ export const StyledTextInput = styled.TextInput`
   margin-bottom: 10px;
   color: ${tertiary};
 `
-export const StartButton = styled.TouchableOpacity`
+export const StyledButton = styled.TouchableOpacity`
   padding: 15px;
   background-color: ${brand};
   justify-content: center;
@@ -86,6 +86,18 @@ export const ButtonText = styled.Text`
   color: ${primary};
   font-size: 16px;
   text-align: center;
+`
+
+export const MessageBox = styled.Text`
+  text-align: center;
+  font-size: 13px;
+`
+
+export const Line = styled.View`
+  height: 1px;
+  width: 100%;
+  background-color: ${darkLight};
+  margin-vertical: 10px;
 `
 
 //TextInput
