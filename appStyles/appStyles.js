@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 import Constants from 'expo-constants'
+import { Dimensions } from 'react-native'
 
 const StatusBarHeight = Constants.statusBarHeight
+const windowWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 
 //colors
 export const Colors = {
@@ -133,3 +136,34 @@ export const RightIcon = styled.TouchableOpacity`
 `
 
 export const StyledBlankParagraph = styled.View``
+
+//Home
+export const StyledBox = styled.View`
+  background-color: ${green};
+  padding: 70px;
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-top: 50%;
+  margin-bottom: 8px;
+  align-items: center;
+`
+
+export const StyledFooter = styled.View`
+  background-color: ${lightGrey};
+  border-color: ${secondary};
+  padding: 20px;
+  width: ${windowWidth * 0.88}px;
+  top: 320px;
+`
+
+export const StyledHeaderContainer = styled.View`
+  background-color: ${lightGrey};
+  margin-top: ${StatusBarHeight}px;
+  padding: 20px;
+`
+
+export const LeftClickableIcon = styled.TouchableOpacity`
+  left: 15px;
+  top: 35px;
+  position: absolute;
+`
