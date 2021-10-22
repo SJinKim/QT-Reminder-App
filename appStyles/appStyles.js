@@ -74,6 +74,18 @@ export const StyledTextInput = styled.TextInput`
   margin-bottom: 10px;
   color: ${tertiary};
 `
+
+export const StyledView = styled.View`
+  background-color: ${lightGrey};
+  padding: 15px;
+  padding-left: 55px;
+  padding-right: 55px;
+  border-radius: 5px;
+  height: 65px;
+  margin-bottom: 10px;
+  color: ${tertiary};
+`
+
 export const StyledButton = styled.TouchableOpacity`
   padding: 15px;
   background-color: ${brand};
@@ -118,5 +130,6 @@ export const RightIcon = styled.TouchableOpacity`
   right: 15px;
   top: 38px;
   position: absolute;
-  z-index: 1;
 `
+
+export const StyledBlankParagraph = styled.View``

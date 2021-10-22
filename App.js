@@ -3,9 +3,10 @@ import React from 'react'
 import { View } from 'react-native'
 
 //Components
-import Home from './components/Home'
-import Login from './components/Login'
+import Home from './screen/Home'
+import Login from './screen/Login'
+import Signup from './screen/Signup'
 
 export default function App() {
-  return <Login />
+  return <Signup />
 }
