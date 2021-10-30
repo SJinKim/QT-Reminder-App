@@ -1,15 +1,15 @@
 import React from 'react'
+import { Platform } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 
 //Dropdown Menu
 import { churches, belong } from './DropdownMenus'
 
-const DropdownSelect = () => {
+const DropdownSelect = ({ menuSelect }) => {
   return (
     <RNPickerSelect
       onValueChange={(value) => console.log(value)}
-      items={churches}
-      style={{ padding: 20, borderColor: 'red' }}
+      items={menuSelect}
     />
   )
 }
