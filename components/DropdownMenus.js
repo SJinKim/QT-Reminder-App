@@ -1,7 +1,7 @@
 //dropdown menu
 export const churches = [
   { label: 'Hanmaum', value: 'Hanmaum' },
-  { label: 'Manheim', value: 'Manheim' },
+  { label: 'Mannheim', value: 'Mannheim' },
 ]
 
 export const belong = [
