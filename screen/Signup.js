@@ -12,8 +12,10 @@ import DropdownSelect from '../components/DropdownSelect'
 
 //logo
 import hanmaumLogo from '../assets/hanmaum-logo.png'
-
 import { StatusBar } from 'expo-status-bar'
+
+//DropdownMenu
+import { churches, belong } from '../components/DropdownMenus'
 
 //styles
 import {
@@ -21,7 +23,6 @@ import {
   InnerContainer,
   PageLogo,
   PageTitle,
-  SubTitle,
   StyledFormArea,
   StyledInputLabel,
   LeftIcon,
@@ -32,7 +33,7 @@ import {
   Colors,
   MessageBox,
   StyledView,
-  Line,
+  StyledDropdownContainer,
 } from '../appStyles/appStyles'
 
 //Colors
@@ -71,7 +72,7 @@ const TextInput = ({
   )
 }
 
-const DropdownMenu = ({ isChurch, label, icon }) => {
+const DropdownMenu = ({ isChurch, label, icon, menuSelect }) => {
   return (
     <View>
       <LeftIcon>
@@ -83,7 +84,9 @@ const DropdownMenu = ({ isChurch, label, icon }) => {
       </LeftIcon>
       <StyledInputLabel>{label}</StyledInputLabel>
       <StyledView>
-        <DropdownSelect />
+        <StyledDropdownContainer>
+          <DropdownSelect menuSelect={menuSelect} />
+        </StyledDropdownContainer>
       </StyledView>
     </View>
   )
@@ -135,6 +138,7 @@ const Signup = () => {
                   isChurch={true}
                   label='교회'
                   icon='church'
+                  menuSelect={churches}
                   placeholderTextColor={darkLight}
                   onBlur={handleBlur('church')}
                   value={values.church}
@@ -142,9 +146,10 @@ const Signup = () => {
                   onChangeText={handleChange('church')}
                 ></DropdownMenu>
                 <DropdownMenu
-                  isChurch={true}
-                  label='교회'
-                  icon='church'
+                  isChurch={false}
+                  label='순'
+                  icon='link'
+                  menuSelect={belong}
                   placeholderTextColor={darkLight}
                   value={values.church}
                   keyboardType='email-address'
