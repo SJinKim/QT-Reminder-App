@@ -167,3 +167,9 @@ export const LeftClickableIcon = styled.TouchableOpacity`
   top: 35px;
   position: absolute;
 `
+//Signup
+export const StyledDropdownContainer = styled.View`
+  justify-content: center;
+  margin-left: 50px;
+  margin-top: 9px;
+`
