@@ -173,3 +173,43 @@ export const StyledDropdownContainer = styled.View`
   margin-left: 50px;
   margin-top: 9px;
 `
+
+//CountDown
+export const StyledCDContainer = styled.View`
+  flex: 1;
+  width: auto;
+  height: auto;
+  justify-content: space-around;
+  align-items: center;
+`
+
+export const CDTimeSet = styled.View`
+  border: 1px solid black;
+  padding: 30px;
+  width: 80%;
+`
+
+export const CDTimeSetHeading = styled.Text`
+  padding-left: 30%;
+`
+
+export const CDDisplay = styled.View`
+  border: 1px solid black;
+  padding: 50px;
+  width: 80%;
+  height: 20%;
+`
+
+export const CDButton = styled.TouchableOpacity`
+  border: 1px solid black;
+  border-radius: 50px;
+  width: 95px;
+  height: 95px;
+  padding: 30px;
+`
+
+export const CDTimeInput = styled.TextInput`
+  border: 1px solid black;
+  padding: 10px;
+  margin-top: 20px;
+`
