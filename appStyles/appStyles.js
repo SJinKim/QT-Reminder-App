@@ -191,13 +191,16 @@ export const CDTimeSet = styled.View`
 
 export const CDTimeSetHeading = styled.Text`
   padding-left: 30%;
+  margin-bottom: 10px;
+  border: 1px solid black;
 `
 
 export const CDDisplay = styled.View`
   border: 1px solid black;
-  padding: 50px;
+  padding: 30px;
   width: 80%;
   height: 20%;
+  background-color: skyblue;
 `
 
 export const CDButton = styled.TouchableOpacity`

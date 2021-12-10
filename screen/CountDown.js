@@ -31,26 +31,58 @@ const DismissKeyboard = ({ children }) => (
 )
 
 const CountDown = () => {
-  const [running, setRunning] = useState(false)
-  const [number, setNumber] = useState(null)
+  const [hour, setHour] = useState('')
+  const [min, setMin] = useState('')
 
-  const currentTime = moment().format('h:mm:ss a')
+  const currentHour = moment().format('HH')
+  const currentMin = moment().format('mm')
+
+  const overMin = 60 - -currentMin
+  const overHour = currentHour - hour
+
+  const a = (t) => {
+    if (t >= currentHour) {
+      return t - currentHour
+    } else return 24 - overHour
+  }
+
+  const b = (z) => {
+    if (z <= currentMin) {
+      return currentMin - z
+    } else return overMin - z
+  }
 
   return (
     <DismissKeyboard>
       <StyledCDContainer>
         <CDTimeSet>
-          <CDTimeSetHeading>TimeSet</CDTimeSetHeading>
+          <CDTimeSetHeading>Time Set</CDTimeSetHeading>
           <CDTimeInput
             keyboardType='numeric'
-            onChangeText={setNumber}
-            value={number}
-            placeholder={'set time here'}
+            onChangeText={(hour) => setHour(hour)}
+            value={hour}
+            placeholder={'set hour'}
+            maxLength={2}
+          />
+          <CDTimeInput
+            keyboardType='numeric'
+            onChangeText={(min) => setMin(min)}
+            value={min}
+            placeholder={'set min'}
+            maxLength={2}
           />
         </CDTimeSet>
         <CDDisplay>
           <CDTimeSetHeading>Countdown</CDTimeSetHeading>
-          <Text>{currentTime}</Text>
+          <Text>
+            alarm set: {hour} : {min}
+          </Text>
+          <Text>
+            current Time: {currentHour} : {currentMin}
+          </Text>
+          <Text>
+            countdown: {a(hour)} : {b(min)}
+          </Text>
         </CDDisplay>
         <CDButton>
           <Text>Start</Text>
