@@ -9,5 +9,5 @@ import Signup from './screen/Signup'
 import CountDown from './screen/CountDown'
 
 export default function App() {
-  return <CountDown />
+  return <Home />
 }
