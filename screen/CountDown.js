@@ -22,6 +22,7 @@ import {
 import TimerDisplay from '../components/TimerDisplay'
 import TimerButtons from '../components/TimerButtons'
 import TimerHeader from '../components/TimerHeader'
+import { useEffect } from 'react/cjs/react.development'
 
 //dismiss keyboard
 const DismissKeyboard = ({ children }) => (
@@ -51,6 +52,11 @@ const CountDown = () => {
       return currentMin - z
     } else return overMin - z
   }
+
+  const countHour = a(hour)
+  const countMin = b(min)
+
+  useEffect(() => {}, [hour])
 
   return (
     <DismissKeyboard>

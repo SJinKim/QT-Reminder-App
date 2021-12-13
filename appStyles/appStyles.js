@@ -140,12 +140,10 @@ export const StyledBlankParagraph = styled.View``
 //Home
 export const StyledBox = styled.View`
   background-color: ${green};
-  padding: 70px;
-  margin-left: 16px;
-  margin-right: 16px;
-  margin-top: 50%;
-  margin-bottom: 8px;
+  flex: 0.4;
   align-items: center;
+  justify-content: center;
+  margin-top: 50%;
 `
 
 export const StyledFooter = styled.View`
