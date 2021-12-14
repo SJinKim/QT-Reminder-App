@@ -140,12 +140,10 @@ export const StyledBlankParagraph = styled.View``
 //Home
 export const StyledBox = styled.View`
   background-color: ${green};
-  padding: 70px;
-  margin-left: 16px;
-  margin-right: 16px;
-  margin-top: 50%;
-  margin-bottom: 8px;
+  flex: 0.4;
   align-items: center;
+  justify-content: center;
+  margin-top: 50%;
 `
 
 export const StyledFooter = styled.View`
@@ -203,6 +201,22 @@ export const CDDisplay = styled.View`
   background-color: skyblue;
 `
 
+export const CDAlarmTimeView = styled.View`
+  justify-content: space-around;
+  flex-direction: row;
+  height: 100px;
+  width: auto;
+`
+
+export const CDButtonSmall = styled.TouchableOpacity`
+  border: 1px solid black;
+  border-width: 2px;
+  margin-top: 30px;
+  padding: 14px;
+  width: 80%;
+  margin-left: 10%;
+`
+
 export const CDButton = styled.TouchableOpacity`
   border: 1px solid black;
   border-radius: 50px;
@@ -215,4 +229,5 @@ export const CDTimeInput = styled.TextInput`
   border: 1px solid black;
   padding: 10px;
   margin-top: 20px;
+  width: 30%;
 `
