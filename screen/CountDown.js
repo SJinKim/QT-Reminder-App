@@ -5,8 +5,9 @@ import {
   TextInput,
   Keyboard,
   TouchableWithoutFeedback,
+  Vibration,
+  StyleSheet,
 } from 'react-native'
-import { Vibration } from 'react-native'
 
 //styles
 import {
@@ -16,13 +17,9 @@ import {
   CDDisplay,
   CDButton,
   CDTimeInput,
+  CDAlarmTimeView,
+  CDButtonSmall,
 } from '../appStyles/appStyles'
-
-//Components
-import TimerDisplay from '../components/TimerDisplay'
-import TimerButtons from '../components/TimerButtons'
-import TimerHeader from '../components/TimerHeader'
-import { useEffect } from 'react/cjs/react.development'
 
 //dismiss keyboard
 const DismissKeyboard = ({ children }) => (
@@ -34,6 +31,10 @@ const DismissKeyboard = ({ children }) => (
 const CountDown = () => {
   const [hour, setHour] = useState('')
   const [min, setMin] = useState('')
+  const [saveHr, setSaveHr] = useState('')
+  const [saveMin, setSaveMin] = useState('')
+
+  const [alarmOn, setAlarmOn] = useState(false)
 
   const currentHour = moment().format('HH')
   const currentMin = moment().format('mm')
@@ -56,38 +57,66 @@ const CountDown = () => {
   const countHour = a(hour)
   const countMin = b(min)
 
-  useEffect(() => {}, [hour])
+  const handleTime = (time, inputNum) => {
+    if (inputNum == 1) {
+      if ((time > 0 && time <= 24) || time == '') {
+        setHour(time)
+      } else return alert('Please enter valid number!')
+    }
+    if (inputNum == 2) {
+      if ((time > 0 && time <= 60) || time == '') {
+        setMin(time)
+      } else return alert('Please enter valid number!')
+    }
+  }
+
+  const handleSave = (hour, min) => {
+    if (hour == '' || min == '') {
+      return alert('please enter a time!')
+    } else setSaveHr(hour)
+    setSaveMin(min)
+    setAlarmOn(true)
+  }
 
   return (
     <DismissKeyboard>
       <StyledCDContainer>
         <CDTimeSet>
           <CDTimeSetHeading>Time Set</CDTimeSetHeading>
-          <CDTimeInput
-            keyboardType='numeric'
-            onChangeText={(hour) => setHour(hour)}
-            value={hour}
-            placeholder={'set hour'}
-            maxLength={2}
-          />
-          <CDTimeInput
-            keyboardType='numeric'
-            onChangeText={(min) => setMin(min)}
-            value={min}
-            placeholder={'set min'}
-            maxLength={2}
-          />
+          <CDAlarmTimeView>
+            <CDTimeInput
+              keyboardType='numeric'
+              onChangeText={(hour) => handleTime(hour, 1)}
+              value={hour}
+              placeholder={'hour'}
+              maxLength={2}
+            />
+            <CDTimeInput
+              keyboardType='numeric'
+              onChangeText={(min) => handleTime(min, 2)}
+              value={min}
+              placeholder={'min'}
+              maxLength={2}
+            />
+          </CDAlarmTimeView>
+          <CDButtonSmall onPress={() => handleSave(hour, min)}>
+            <Text style={styles.textSmall}>click to save</Text>
+          </CDButtonSmall>
         </CDTimeSet>
         <CDDisplay>
           <CDTimeSetHeading>Countdown</CDTimeSetHeading>
-          <Text>
-            alarm set: {hour} : {min}
-          </Text>
+          {alarmOn ? (
+            <Text>
+              Alarm1: {saveHr} : {saveMin}
+            </Text>
+          ) : (
+            <Text>No Alarm set</Text>
+          )}
           <Text>
             current Time: {currentHour} : {currentMin}
           </Text>
           <Text>
-            countdown: {a(hour)} : {b(min)}
+            remaining time to alarm: {a(saveHr)} : {b(saveMin)}
           </Text>
         </CDDisplay>
         <CDButton>
@@ -97,5 +126,11 @@ const CountDown = () => {
     </DismissKeyboard>
   )
 }
+
+const styles = StyleSheet.create({
+  textSmall: {
+    textAlign: 'center',
+  },
+})
 
 export default CountDown
