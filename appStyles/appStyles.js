@@ -201,6 +201,22 @@ export const CDDisplay = styled.View`
   background-color: skyblue;
 `
 
+export const CDAlarmTimeView = styled.View`
+  justify-content: space-around;
+  flex-direction: row;
+  height: 100px;
+  width: auto;
+`
+
+export const CDButtonSmall = styled.TouchableOpacity`
+  border: 1px solid black;
+  border-width: 2px;
+  margin-top: 30px;
+  padding: 14px;
+  width: 80%;
+  margin-left: 10%;
+`
+
 export const CDButton = styled.TouchableOpacity`
   border: 1px solid black;
   border-radius: 50px;
@@ -213,4 +229,5 @@ export const CDTimeInput = styled.TextInput`
   border: 1px solid black;
   padding: 10px;
   margin-top: 20px;
+  width: 30%;
 `
