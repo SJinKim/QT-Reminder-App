@@ -10,6 +10,9 @@ import { Formik } from 'formik'
 import { Octicons, Ionicons, FontAwesome5 } from '@expo/vector-icons'
 import DropdownSelect from '../components/DropdownSelect'
 
+import { useNavigation } from '@react-navigation/core'
+import { auth } from '../firebase'
+
 //logo
 import hanmaumLogo from '../assets/hanmaum-logo.png'
 import { StatusBar } from 'expo-status-bar'
@@ -35,6 +38,8 @@ import {
   StyledView,
   StyledDropdownContainer,
 } from '../appStyles/appStyles'
+
+
 
 //Colors
 const { brand, darkLight } = Colors
@@ -95,6 +100,22 @@ const DropdownMenu = ({ isChurch, label, icon, menuSelect }) => {
 const Signup = () => {
   const [hidePassword, setHidePassword] = useState(true)
 
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const navigation = useNavigation()
+
+  const handleSignup = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+      })
+      .catch(error => alert(error.message))
+
+    navigation.replace("Home")
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Container>
@@ -112,27 +133,31 @@ const Signup = () => {
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <StyledFormArea>
                 <TextInput
-                  label='Email Adress'
+                  label='Email Address'
                   icon='mail'
                   placeholder='a@gmail.com'
                   placeholderTextColor={darkLight}
                   onBlur={handleBlur('email')}
-                  value={values.email}
+                  //value={values.email}
                   keyboardType='email-address'
-                  onChangeText={handleChange('email')}
+                  //onChangeText={handleChange('email')}
+                  value={email}
+                  onChangeText={text => setEmail(text)}
                 />
                 <TextInput
                   label='Password'
                   icon='lock'
                   placeholder='*********'
                   placeholderTextColor={darkLight}
-                  onChangeText={handleChange('password')}
+                  //onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
-                  value={values.password}
+                  //value={values.password}
                   secureTextEntry={hidePassword}
                   isPassword={true}
                   hidePassword={hidePassword}
                   setHidePassword={setHidePassword}
+                  value={password}
+                  onChangeText={text => setPassword(text)}
                 />
                 <DropdownMenu
                   isChurch={true}
@@ -156,7 +181,7 @@ const Signup = () => {
                   onChangeText={handleChange('church')}
                 ></DropdownMenu>
                 <MessageBox></MessageBox>
-                <StyledButton onPress={handleSubmit}>
+                <StyledButton onPress={handleSignup}>
                   <ButtonText>Sign Up</ButtonText>
                 </StyledButton>
               </StyledFormArea>

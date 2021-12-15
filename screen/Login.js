@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
 import { Formik } from 'formik'
 import { Octicons, Ionicons } from '@expo/vector-icons'
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper'
+
+import { useNavigation } from '@react-navigation/core'
+import { auth } from '../firebase'
 //logo
 import hanmaumLogo from '../assets/hanmaum-logo.png'
 
@@ -26,6 +29,8 @@ import {
   MessageBox,
   Line,
 } from '../appStyles/appStyles'
+
+
 
 //Colors
 const { brand, darkLight } = Colors
@@ -61,6 +66,28 @@ const TextInput = ({
 const Login = () => {
   const [hidePassword, setHidePassword] = useState(true)
 
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const navigation = useNavigation()
+
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if(user) {
+        navigation.replace("Home")
+      }
+    })
+  }, [])
+
+  const handleLogin = () => {
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+      })
+      .catch(error => alert(error.message))
+  }
+
   return (
     <KeyboardAvoidingWrapper>
       <Container>
@@ -79,35 +106,36 @@ const Login = () => {
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <StyledFormArea>
                 <TextInput
-                  label='Email Adress'
+                  label='Email Address'
                   icon='mail'
                   placeholder='a@gmail.com'
                   placeholderTextColor={darkLight}
                   onBlur={handleBlur('email')}
-                  value={values.email}
                   keyboardType='email-address'
-                  onChangeText={handleChange('email')}
+                  value={email}
+                  onChangeText={text => setEmail(text)}
                 />
                 <TextInput
                   label='Password'
                   icon='lock'
                   placeholder='*********'
                   placeholderTextColor={darkLight}
-                  onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
-                  value={values.password}
                   secureTextEntry={hidePassword}
                   isPassword={true}
                   hidePassword={hidePassword}
                   setHidePassword={setHidePassword}
+                  value={password}
+                  onChangeText={text => setPassword(text)}
                 />
                 <MessageBox>...</MessageBox>
-                <StyledButton onPress={handleSubmit}>
+                <StyledButton onPress={handleLogin}>
                   <ButtonText>Login</ButtonText>
                 </StyledButton>
                 <Line />
-                <StyledButton onPress={handleSubmit}>
-                  <ButtonText>Sign Up</ButtonText>
+                <StyledButton onPress={() =>
+                  navigation.navigate("Signup")}>
+                    <ButtonText>Sign Up</ButtonText>
                 </StyledButton>
               </StyledFormArea>
             )}
