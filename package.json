@@ -8,6 +8,8 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^14.0.1",
+    "@react-native-firebase/firestore": "^14.0.1",
     "@react-native-picker/picker": "1.16.1",
     "@react-navigation/drawer": "^6.1.8",
     "@react-navigation/native": "^6.0.6",

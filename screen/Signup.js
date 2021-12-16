@@ -12,6 +12,7 @@ import DropdownSelect from '../components/DropdownSelect'
 
 import { useNavigation } from '@react-navigation/core'
 import { auth } from '../firebase'
+import firebase from 'firebase'
 
 //logo
 import hanmaumLogo from '../assets/hanmaum-logo.png'
@@ -102,6 +103,8 @@ const Signup = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [church, setChurch] = useState('')
+  const [cell, setCell] = useState('')
 
   const navigation = useNavigation()
 
@@ -110,10 +113,19 @@ const Signup = () => {
       .createUserWithEmailAndPassword(email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
+        firebase.firestore().collection("users")
+          .doc(firebase.auth().currentUser.uid)
+          .set({
+            email,
+            church,
+            cell
+          })
+        console.log("user added")
+        navigation.replace("Home")
       })
       .catch(error => alert(error.message))
 
-    navigation.replace("Home")
+    
   }
 
   return (
@@ -125,7 +137,7 @@ const Signup = () => {
           <PageTitle>Sign Up</PageTitle>
 
           <Formik
-            initialValues={{ email: '', password: '', church: '', cell: '' }}
+            initialValues={{email: '', password: '', church: '', cell: '' }}
             onSubmit={(values) => {
               console.log(values)
             }}
@@ -138,9 +150,7 @@ const Signup = () => {
                   placeholder='a@gmail.com'
                   placeholderTextColor={darkLight}
                   onBlur={handleBlur('email')}
-                  //value={values.email}
                   keyboardType='email-address'
-                  //onChangeText={handleChange('email')}
                   value={email}
                   onChangeText={text => setEmail(text)}
                 />
@@ -149,9 +159,7 @@ const Signup = () => {
                   icon='lock'
                   placeholder='*********'
                   placeholderTextColor={darkLight}
-                  //onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
-                  //value={values.password}
                   secureTextEntry={hidePassword}
                   isPassword={true}
                   hidePassword={hidePassword}
@@ -166,9 +174,11 @@ const Signup = () => {
                   menuSelect={churches}
                   placeholderTextColor={darkLight}
                   onBlur={handleBlur('church')}
-                  value={values.church}
+                  //value={values.church}
                   keyboardType='email-address'
-                  onChangeText={handleChange('church')}
+                  //onChangeText={handleChange('church')}
+                  value={church}
+                  onChangeText={text => setChurch(text)}
                 ></DropdownMenu>
                 <DropdownMenu
                   isChurch={false}
@@ -176,9 +186,11 @@ const Signup = () => {
                   icon='link'
                   menuSelect={belong}
                   placeholderTextColor={darkLight}
-                  value={values.church}
+                  //value={values.church}
                   keyboardType='email-address'
-                  onChangeText={handleChange('church')}
+                  //onChangeText={handleChange('church')}
+                  value={cell}
+                  onValueChange={value => setCell(value)}
                 ></DropdownMenu>
                 <MessageBox></MessageBox>
                 <StyledButton onPress={handleSignup}>
