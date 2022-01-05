@@ -138,20 +138,11 @@ export const RightIcon = styled.TouchableOpacity`
 export const StyledBlankParagraph = styled.View``
 
 //Home
-export const StyledBox = styled.View`
-  background-color: ${green};
-  flex: 0.4;
-  align-items: center;
-  justify-content: center;
-  margin-top: 50%;
-`
-
 export const StyledFooter = styled.View`
   background-color: ${lightGrey};
   border-color: ${secondary};
   padding: 20px;
   width: ${windowWidth * 0.88}px;
-  top: 320px;
 `
 
 export const StyledHeaderContainer = styled.View`
@@ -165,6 +156,37 @@ export const LeftClickableIcon = styled.TouchableOpacity`
   top: 35px;
   position: absolute;
 `
+export const TimerFrameView = styled.View`
+  flex: 0.5;
+  border: 1px solid black;
+  padding: 30px;
+  background-color: skyblue;
+`
+export const StyledTimerFrame = styled.View`
+  flex-direction: row;
+  justify-content: space-around;
+`
+
+export const TimeInput = styled.TextInput`
+  border: 1px solid black;
+  padding: 10px;
+  margin-top: 20px;
+  width: 40%;
+  height: 60px;
+`
+
+export const ButtonChange = styled.TouchableOpacity`
+  border: 1px solid black;
+  border-width: 2px;
+  margin-top: 30px;
+  padding: 14px;
+  width: 80%;
+  margin-left: 10%;
+`
+export const FrameViewOne = styled.View``
+
+//==============================================
+
 //Signup
 export const StyledDropdownContainer = styled.View`
   justify-content: center;
@@ -174,11 +196,17 @@ export const StyledDropdownContainer = styled.View`
 
 //CountDown
 export const StyledCDContainer = styled.View`
-  flex: 1;
-  width: auto;
-  height: auto;
-  justify-content: space-around;
+  flex: 0.8;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+`
+export const CDDisplay = styled.View`
+  border: 1px solid black;
+  padding: 30px;
+  width: 80%;
+  height: 20%;
+  background-color: skyblue;
 `
 
 export const CDTimeSet = styled.View`
@@ -191,14 +219,6 @@ export const CDTimeSetHeading = styled.Text`
   padding-left: 30%;
   margin-bottom: 10px;
   border: 1px solid black;
-`
-
-export const CDDisplay = styled.View`
-  border: 1px solid black;
-  padding: 30px;
-  width: 80%;
-  height: 20%;
-  background-color: skyblue;
 `
 
 export const CDAlarmTimeView = styled.View`
@@ -223,6 +243,7 @@ export const CDButton = styled.TouchableOpacity`
   width: 95px;
   height: 95px;
   padding: 30px;
+  margin-top: 20px;
 `
 
 export const CDTimeInput = styled.TextInput`

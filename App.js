@@ -6,8 +6,9 @@ import { View } from 'react-native'
 import Home from './screen/Home'
 import Login from './screen/Login'
 import Signup from './screen/Signup'
-import CountDown from './screen/CountDown'
+import TimerDisplay from './components/TimerDisplay'
+import TimerSet from './components/TimerSet'
 
 export default function App() {
-  return <CountDown />
+  return <Signup />
 }
