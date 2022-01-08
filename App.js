@@ -8,7 +8,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './screen/Home'
 import Login from './screen/Login'
 import Signup from './screen/Signup'
-import CountDown from './screen/CountDown'
+import TimerDisplay from './components/TimerDisplay'
+import TimerSet from './components/TimerSet'
 
 const Stack = createNativeStackNavigator();
 
@@ -23,4 +24,5 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer>
   )
+
 }

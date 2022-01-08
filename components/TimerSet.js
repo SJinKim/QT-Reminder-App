@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Vibration,
   StyleSheet,
+  Button,
 } from 'react-native'
 import moment from 'moment'
 
@@ -19,55 +20,68 @@ import {
   CDButtonSmall,
 } from '../appStyles/appStyles'
 
-//dismiss keyboard
-const DismissKeyboard = ({ children }) => (
-  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    {children}
-  </TouchableWithoutFeedback>
-)
-
-const TimerSet = () => {
-  const [hour, setHour] = useState('')
-  const [min, setMin] = useState('')
-  const [saveHr, setSaveHr] = useState('')
-  const [saveMin, setSaveMin] = useState('')
-
+const TimerSet = ({
+  hour,
+  min,
+  setHour,
+  setMin,
+  saveHr,
+  setSaveHr,
+  saveMin,
+  setSaveMin,
+  alarmOn,
+  setAlarmOn,
+}) => {
+  //constants
   const currentHour = moment().format('HH')
   const currentMin = moment().format('mm')
 
-  const overMin = 60 - -currentMin
-  const overHour = currentHour - hour
-
-  const calculateHour = (t) => {
-    if (t >= currentHour) {
-      return t - currentHour
-    } else return 24 - overHour
-  }
-
-  const calculateMin = (z) => {
-    if (z <= currentMin) {
-      return currentMin - z
-    } else return overMin - z
-  }
-
   const handleTime = (time, inputNum) => {
     if (inputNum == 1) {
-      if ((time > 0 && time <= 24) || time == '') {
+      if ((time >= 0 && time <= 24) || time == '') {
         setHour(time)
       } else return alert('Please enter valid number!')
     }
     if (inputNum == 2) {
-      if ((time > 0 && time <= 60) || time == '') {
+      if ((time >= 0 && time <= 60) || time == '') {
         setMin(time)
       } else return alert('Please enter valid number!')
     }
   }
 
+  const hourCounter = (num) => {
+    var counter = 0
+
+    while (num > 60) {
+      num = num - 60
+      counter++
+    }
+    return counter
+  }
+
+  const calculateTime = (hr, min) => {
+    var totalHourMin = hr * 60 - -min
+    var currentHourMin = currentHour * 60 - -currentMin
+
+    var newTimeMin = 0
+
+    if (totalHourMin > currentHourMin) {
+      newTimeMin = totalHourMin - currentHourMin
+      console.log('this is newTimeMin:', newTimeMin)
+      if (newTimeMin < 60) {
+        setSaveHr(0)
+        setSaveMin(newTimeMin)
+      } else setSaveHr(hourCounter(newTimeMin))
+      setSaveMin(newTimeMin - hourCounter(newTimeMin) * 60)
+      console.log('saveHr:', { saveHr }.saveHr, 'saveMin:', { saveMin }.saveMin)
+    }
+  }
+
   const handleSave = (hour, min) => {
-    if (hour == '' || min == '') {
-      return alert('please enter a time!')
-    } else setSaveHr(hour)
-    setSaveMin(min)
+    if (hour >= 0 && min >= 0) {
+      calculateTime(hour, min)
+      setAlarmOn(!alarmOn)
+    } else return alert('please enter a time!')
   }
 
   return (
