@@ -10,6 +10,10 @@ import { Formik } from 'formik'
 import { Octicons, Ionicons, FontAwesome5 } from '@expo/vector-icons'
 import DropdownSelect from '../components/DropdownSelect'
 
+import { useNavigation } from '@react-navigation/core'
+import { auth } from '../firebase'
+import firebase from 'firebase'
+
 //logo
 import hanmaumLogo from '../assets/hanmaum-logo.png'
 import { StatusBar } from 'expo-status-bar'
@@ -35,6 +39,8 @@ import {
   StyledView,
   StyledDropdownContainer,
 } from '../appStyles/appStyles'
+
+
 
 //Colors
 const { brand, darkLight } = Colors
@@ -95,6 +101,33 @@ const DropdownMenu = ({ isChurch, label, icon, menuSelect }) => {
 const Signup = () => {
   const [hidePassword, setHidePassword] = useState(true)
 
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [church, setChurch] = useState('')
+  const [cell, setCell] = useState('')
+
+  const navigation = useNavigation()
+
+  const handleSignup = () => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        firebase.firestore().collection("users")
+          .doc(firebase.auth().currentUser.uid)
+          .set({
+            email,
+            church,
+            cell
+          })
+        console.log("user added")
+        navigation.replace("Home")
+      })
+      .catch(error => alert(error.message))
+
+    
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Container>
@@ -104,7 +137,7 @@ const Signup = () => {
           <PageTitle>Sign Up</PageTitle>
 
           <Formik
-            initialValues={{ email: '', password: '', church: '', cell: '' }}
+            initialValues={{email: '', password: '', church: '', cell: '' }}
             onSubmit={(values) => {
               console.log(values)
             }}
@@ -112,27 +145,27 @@ const Signup = () => {
             {({ handleChange, handleBlur, handleSubmit, values }) => (
               <StyledFormArea>
                 <TextInput
-                  label='Email Adress'
+                  label='Email Address'
                   icon='mail'
                   placeholder='a@gmail.com'
                   placeholderTextColor={darkLight}
                   onBlur={handleBlur('email')}
-                  value={values.email}
                   keyboardType='email-address'
-                  onChangeText={handleChange('email')}
+                  value={email}
+                  onChangeText={text => setEmail(text)}
                 />
                 <TextInput
                   label='Password'
                   icon='lock'
                   placeholder='*********'
                   placeholderTextColor={darkLight}
-                  onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
-                  value={values.password}
                   secureTextEntry={hidePassword}
                   isPassword={true}
                   hidePassword={hidePassword}
                   setHidePassword={setHidePassword}
+                  value={password}
+                  onChangeText={text => setPassword(text)}
                 />
                 <DropdownMenu
                   isChurch={true}
@@ -141,9 +174,11 @@ const Signup = () => {
                   menuSelect={churches}
                   placeholderTextColor={darkLight}
                   onBlur={handleBlur('church')}
-                  value={values.church}
+                  //value={values.church}
                   keyboardType='email-address'
-                  onChangeText={handleChange('church')}
+                  //onChangeText={handleChange('church')}
+                  value={church}
+                  onChangeText={text => setChurch(text)}
                 ></DropdownMenu>
                 <DropdownMenu
                   isChurch={false}
@@ -151,12 +186,14 @@ const Signup = () => {
                   icon='link'
                   menuSelect={belong}
                   placeholderTextColor={darkLight}
-                  value={values.church}
+                  //value={values.church}
                   keyboardType='email-address'
-                  onChangeText={handleChange('church')}
+                  //onChangeText={handleChange('church')}
+                  value={cell}
+                  onValueChange={value => setCell(value)}
                 ></DropdownMenu>
                 <MessageBox></MessageBox>
-                <StyledButton onPress={handleSubmit}>
+                <StyledButton onPress={handleSignup}>
                   <ButtonText>Sign Up</ButtonText>
                 </StyledButton>
               </StyledFormArea>

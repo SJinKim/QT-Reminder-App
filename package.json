@@ -8,10 +8,17 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-firebase/app": "^14.0.1",
+    "@react-native-firebase/firestore": "^14.0.1",
     "@react-native-picker/picker": "1.16.1",
+    "@react-navigation/drawer": "^6.1.8",
+    "@react-navigation/native": "^6.0.6",
+    "@react-navigation/native-stack": "^6.2.5",
     "axios": "^0.22.0",
+    "context": "^1.1.4",
     "expo": "~42.0.1",
     "expo-status-bar": "~1.0.4",
+    "firebase": "8.2.3",
     "formik": "^2.2.9",
     "moment": "^2.29.1",
     "react": "^17.0.2",
@@ -23,6 +30,9 @@
     "react-native-material-dropdown": "^0.11.1",
     "react-native-paper": "^4.9.2",
     "react-native-picker-select": "^8.0.4",
+    "react-native-safe-area": "^0.5.1",
+    "react-native-safe-area-context": "3.2.0",
+    "react-native-screens": "~3.4.0",
     "react-native-web": "~0.13.12",
     "styled-components": "^5.3.1"
   },

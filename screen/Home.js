@@ -1,7 +1,10 @@
+import { useNavigation } from '@react-navigation/native'
+import { auth } from '../firebase'
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import CountDown from 'react-native-countdown-component'
 import moment from 'moment'
+
 
 //icons
 import { MaterialIcons, Entypo } from '@expo/vector-icons'
@@ -10,6 +13,8 @@ import { MaterialIcons, Entypo } from '@expo/vector-icons'
 import {
   Container,
   StyledBox,
+  StyledButton,
+  ButtonText,
   StyledFooter,
   RightIcon,
   LeftClickableIcon,
@@ -19,8 +24,19 @@ import {
   ButtonChange,
   FrameViewOne,
 } from '../appStyles/appStyles'
+import { View } from 'react-native-web'
 
 const Home = () => {
+  const navigation = useNavigation()
+
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.replace("Login")
+      })
+      .catch(error => alert(error.message))
+  }
   const [timerOn, setTimerOn] = useState(false)
   const [timerShow, setTimerShow] = useState(true)
   const [hour, setHour] = useState('')
@@ -38,6 +54,7 @@ const Home = () => {
       } else return alert('Please enter valid number!')
     }
   }
+
 
   return (
     <Container>
@@ -96,7 +113,11 @@ const Home = () => {
       </View>
       <StyledFooter>
         <Text>한마음 교회 특별 새벽기도회 21.08.21 - 21.09.12</Text>
+        <Text>Email: {auth.currentUser?.email}</Text>
       </StyledFooter>
+      <StyledButton onPress={handleSignOut}>
+        <ButtonText>Sign Out</ButtonText>
+      </StyledButton>
     </Container>
   )
 }
