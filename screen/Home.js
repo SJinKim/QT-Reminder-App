@@ -5,7 +5,6 @@ import { View, Text, StyleSheet, Button } from 'react-native'
 import CountDown from 'react-native-countdown-component'
 import moment from 'moment'
 
-
 //icons
 import { MaterialIcons, Entypo } from '@expo/vector-icons'
 
@@ -24,7 +23,6 @@ import {
   ButtonChange,
   FrameViewOne,
 } from '../appStyles/appStyles'
-import { View } from 'react-native-web'
 
 const Home = () => {
   const navigation = useNavigation()
@@ -33,9 +31,9 @@ const Home = () => {
     auth
       .signOut()
       .then(() => {
-        navigation.replace("Login")
+        navigation.replace('Login')
       })
-      .catch(error => alert(error.message))
+      .catch((error) => alert(error.message))
   }
   const [timerOn, setTimerOn] = useState(false)
   const [timerShow, setTimerShow] = useState(true)
@@ -54,7 +52,6 @@ const Home = () => {
       } else return alert('Please enter valid number!')
     }
   }
-
 
   return (
     <Container>
