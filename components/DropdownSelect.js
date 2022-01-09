@@ -1,14 +1,10 @@
-import React from 'react'
-import { Platform } from 'react-native'
+import React, { useState } from 'react'
 import RNPickerSelect from 'react-native-picker-select'
 
-//Dropdown Menu
-import { churches, belong } from './DropdownMenus'
-
-const DropdownSelect = ({ menuSelect }) => {
+const DropdownSelect = ({ menuSelect, isChurch, setChurch, setCell }) => {
   return (
     <RNPickerSelect
-      onValueChange={(value) => console.log(value)}
+      onValueChange={(value) => (isChurch ? setChurch(value) : setCell(value))}
       items={menuSelect}
     />
   )
