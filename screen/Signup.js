@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, SafeAreaView } from 'react-native'
 import { Formik } from 'formik'
 import { Octicons, Ionicons, FontAwesome5 } from '@expo/vector-icons'
-
-//import components
-import DropdownSelect from '../components/DropdownSelect'
+import RNPickerSelect from 'react-native-picker-select'
 
 import { useNavigation } from '@react-navigation/core'
 import { auth } from '../firebase'
@@ -15,7 +13,10 @@ import hanmaumLogo from '../assets/hanmaum-logo.png'
 import { StatusBar } from 'expo-status-bar'
 
 //DropdownMenu
-import { churches, belong } from '../components/DropdownMenus'
+import { churches, cells } from '../components/DropdownMenus'
+
+//authcontext
+import { AuthContext } from '../context'
 
 //styles
 import {
@@ -75,6 +76,9 @@ const TextInput = ({
 const Signup = () => {
   const [hidePassword, setHidePassword] = useState(true)
 
+  //authcontext
+  const { signUp } = useContext(AuthContext)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [church, setChurch] = useState('')
@@ -95,110 +99,94 @@ const Signup = () => {
             email,
             church,
             cell,
+            password,
           })
         console.log('user added')
-        navigation.replace('Home')
+        //signup
+        signUp()
+        navigation.push('Main')
       })
       .catch((error) => alert(error.message))
   }
 
-  const DropdownMenu = ({ isChurch, label, icon, menuSelect }) => {
-    return (
-      <View>
-        <LeftIcon>
-          {isChurch ? (
-            <FontAwesome5 name={icon} size={30} color={brand} />
-          ) : (
-            <Octicons name={icon} size={30} color={brand} />
-          )}
-        </LeftIcon>
-        <StyledInputLabel>{label}</StyledInputLabel>
-        <StyledView>
-          <StyledDropdownContainer>
-            <DropdownSelect
-              menuSelect={menuSelect}
-              isChurch={isChurch}
-              setChurch={setChurch}
-              setCell={setCell}
-            />
-          </StyledDropdownContainer>
-        </StyledView>
-      </View>
-    )
-  }
-
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Container>
-        <StatusBar style='dark' />
-        <InnerContainer>
-          <PageLogo source={hanmaumLogo} resizeMode='contain' />
-          <PageTitle>Sign Up</PageTitle>
+    <Container>
+      <InnerContainer>
+        <PageLogo source={hanmaumLogo} resizeMode='contain' />
+        <PageTitle>Sign Up</PageTitle>
 
-          <Formik
-            initialValues={{ email: '', password: '', church: '', cell: '' }}
-            onSubmit={(values) => {
-              console.log(values)
-            }}
-          >
-            {({ handleChange, handleBlur, props }) => (
-              <StyledFormArea>
-                <TextInput
-                  label='Email Address'
-                  icon='mail'
-                  placeholder='email'
-                  placeholderTextColor={darkLight}
-                  onBlur={handleBlur('email')}
-                  keyboardType='email-address'
-                  value={email}
-                  onChangeText={(text) => setEmail(text)}
-                />
-                <TextInput
-                  label='Password'
-                  icon='lock'
-                  placeholder='password'
-                  placeholderTextColor={darkLight}
-                  onBlur={handleBlur('password')}
-                  secureTextEntry={hidePassword}
-                  isPassword={true}
-                  hidePassword={hidePassword}
-                  setHidePassword={setHidePassword}
-                  value={password}
-                  onChangeText={(text) => setPassword(text)}
-                />
-                <DropdownMenu
-                  isChurch={true}
-                  label='교회'
-                  icon='church'
-                  menuSelect={churches}
-                  placeholderTextColor={darkLight}
-                  onBlur={handleBlur('church')}
-                  //value={values.church}
-                  keyboardType='email-address'
-                  //onChangeText={handleChange('church')}
-                  value={church}
-                ></DropdownMenu>
-                <DropdownMenu
-                  isChurch={false}
-                  label='순'
-                  icon='link'
-                  menuSelect={belong}
-                  placeholderTextColor={darkLight}
-                  //value={values.church}
-                  keyboardType='email-address'
-                  //onChangeText={handleChange('church')}
-                  value={cell}
-                ></DropdownMenu>
-                <MessageBox></MessageBox>
-                <StyledButton onPress={handleSignup}>
-                  <ButtonText>Sign Up</ButtonText>
-                </StyledButton>
-              </StyledFormArea>
-            )}
-          </Formik>
-        </InnerContainer>
-      </Container>
-    </SafeAreaView>
+        <Formik
+          initialValues={{ email: '', password: '', church: '', cell: '' }}
+          onSubmit={(values) => {
+            console.log(values)
+          }}
+        >
+          {({ handleBlur }) => (
+            <StyledFormArea>
+              <TextInput
+                label='Email Address'
+                icon='mail'
+                placeholder='email'
+                placeholderTextColor={darkLight}
+                onBlur={handleBlur('email')}
+                keyboardType='email-address'
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+              />
+              <TextInput
+                label='Password'
+                icon='lock'
+                placeholder='password'
+                placeholderTextColor={darkLight}
+                onBlur={handleBlur('password')}
+                secureTextEntry={hidePassword}
+                isPassword={true}
+                hidePassword={hidePassword}
+                setHidePassword={setHidePassword}
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+              />
+              <View>
+                <LeftIcon>
+                  <FontAwesome5 name='church' size={28} color={brand} />
+                </LeftIcon>
+                <StyledInputLabel>Church</StyledInputLabel>
+                <StyledView>
+                  <StyledDropdownContainer>
+                    <RNPickerSelect
+                      onValueChange={(value) => setChurch(value)}
+                      items={churches}
+                      placeholderTextColor={darkLight}
+                      value={church}
+                    />
+                  </StyledDropdownContainer>
+                </StyledView>
+              </View>
+              <View>
+                <LeftIcon>
+                  <FontAwesome5 name='link' size={28} color={brand} />
+                </LeftIcon>
+                <StyledInputLabel>Cell</StyledInputLabel>
+                <StyledView>
+                  <StyledDropdownContainer>
+                    <RNPickerSelect
+                      onValueChange={(value) => setCell(value)}
+                      items={cells}
+                      placeholderTextColor={darkLight}
+                      value={cell}
+                    />
+                  </StyledDropdownContainer>
+                </StyledView>
+              </View>
+              <MessageBox></MessageBox>
+              <StyledButton onPress={handleSignup}>
+                <ButtonText>Sign Up</ButtonText>
+              </StyledButton>
+            </StyledFormArea>
+          )}
+        </Formik>
+      </InnerContainer>
+    </Container>
   )
 }
 
