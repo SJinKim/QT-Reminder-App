@@ -40,6 +40,7 @@ export const InnerContainer = styled.View`
   flex: 1;
   width: 100%;
   align-items: center;
+  background-color: ${primary};
 `
 
 export const PageLogo = styled.Image`
@@ -160,7 +161,6 @@ export const TimerFrameView = styled.View`
   flex: 0.5;
   border: 1px solid black;
   padding: 30px;
-  background-color: skyblue;
 `
 export const StyledTimerFrame = styled.View`
   flex-direction: row;
