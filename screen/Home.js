@@ -1,12 +1,10 @@
-import { useNavigation } from '@react-navigation/native'
 import { auth } from '../firebase'
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import CountDown from 'react-native-countdown-component'
-import moment from 'moment'
 
 //icons
-import { MaterialIcons, Entypo } from '@expo/vector-icons'
+import { Entypo } from '@expo/vector-icons'
 
 //styled
 import {
@@ -23,18 +21,9 @@ import {
   ButtonChange,
   FrameViewOne,
 } from '../appStyles/appStyles'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const Home = () => {
-  const navigation = useNavigation()
-
-  const handleSignOut = () => {
-    auth
-      .signOut()
-      .then(() => {
-        navigation.replace('Login')
-      })
-      .catch((error) => alert(error.message))
-  }
+const Home = ({ navigation }) => {
   const [timerOn, setTimerOn] = useState(false)
   const [timerShow, setTimerShow] = useState(true)
   const [hour, setHour] = useState('')
@@ -53,14 +42,23 @@ const Home = () => {
     }
   }
 
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.push('Login')
+      })
+      .catch((error) => alert(error.message))
+  }
+
   return (
     <Container>
-      <LeftClickableIcon style={{ marginTop: 26, marginLeft: 10 }}>
-        <Entypo name='menu' size={40} color='black' />
-      </LeftClickableIcon>
-      <RightIcon style={{ marginTop: 20 }}>
-        <MaterialIcons name='star-border' size={40} color='black' />
-      </RightIcon>
+      <TouchableOpacity
+        style={{ marginTop: 30 }}
+        onPress={() => navigation.openDrawer()}
+      >
+        <Entypo name='menu' size={35} color='black' />
+      </TouchableOpacity>
       <View style={styles.timerContainer}>
         {timerShow ? (
           <FrameViewOne>
@@ -110,11 +108,7 @@ const Home = () => {
       </View>
       <StyledFooter>
         <Text>한마음 교회 특별 새벽기도회 21.08.21 - 21.09.12</Text>
-        <Text>Email: {auth.currentUser?.email}</Text>
       </StyledFooter>
-      <StyledButton onPress={handleSignOut}>
-        <ButtonText>Sign Out</ButtonText>
-      </StyledButton>
     </Container>
   )
 }
