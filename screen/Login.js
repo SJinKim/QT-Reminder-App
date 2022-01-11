@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { View } from 'react-native'
 import { Formik } from 'formik'
 import { Octicons, Ionicons } from '@expo/vector-icons'
-import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper'
 
 import { useNavigation } from '@react-navigation/core'
 import { auth } from '../firebase'
@@ -10,6 +9,9 @@ import { auth } from '../firebase'
 import hanmaumLogo from '../assets/hanmaum-logo.png'
 
 import { StatusBar } from 'expo-status-bar'
+
+//authContext
+import { AuthContext } from '../context'
 
 //styles
 import {
@@ -26,11 +28,8 @@ import {
   StyledButton,
   ButtonText,
   Colors,
-  MessageBox,
   Line,
 } from '../appStyles/appStyles'
-
-
 
 //Colors
 const { brand, darkLight } = Colors
@@ -63,18 +62,20 @@ const TextInput = ({
   )
 }
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [hidePassword, setHidePassword] = useState(true)
+
+  //authcontext
+  const { login } = useContext(AuthContext)
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const navigation = useNavigation()
-
   useEffect(() => {
-    auth.onAuthStateChanged(user => {
-      if(user) {
-        navigation.replace("Home")
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        login()
+        navigation.push('Home')
       }
     })
   }, [])
@@ -82,67 +83,63 @@ const Login = () => {
   const handleLogin = () => {
     auth
       .signInWithEmailAndPassword(email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
+      .then((userCredentials) => {
+        const user = userCredentials.user
       })
-      .catch(error => alert(error.message))
+      .catch((error) => alert(error.message))
   }
 
   return (
-    <KeyboardAvoidingWrapper>
-      <Container>
-        <StatusBar style='dark' />
-        <InnerContainer>
-          <PageLogo source={hanmaumLogo} resizeMode='contain' />
-          <PageTitle>Quiet Time</PageTitle>
-          <SubTitle>Account Login</SubTitle>
+    <Container>
+      <StatusBar style='dark' />
+      <InnerContainer>
+        <PageLogo source={hanmaumLogo} resizeMode='contain' />
+        <PageTitle>Quiet Time</PageTitle>
+        <SubTitle>Account Login</SubTitle>
 
-          <Formik
-            initialValues={{ email: '', password: '' }}
-            onSubmit={(values) => {
-              console.log(values)
-            }}
-          >
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
-              <StyledFormArea>
-                <TextInput
-                  label='Email Address'
-                  icon='mail'
-                  placeholder='a@gmail.com'
-                  placeholderTextColor={darkLight}
-                  onBlur={handleBlur('email')}
-                  keyboardType='email-address'
-                  value={email}
-                  onChangeText={text => setEmail(text)}
-                />
-                <TextInput
-                  label='Password'
-                  icon='lock'
-                  placeholder='*********'
-                  placeholderTextColor={darkLight}
-                  onBlur={handleBlur('password')}
-                  secureTextEntry={hidePassword}
-                  isPassword={true}
-                  hidePassword={hidePassword}
-                  setHidePassword={setHidePassword}
-                  value={password}
-                  onChangeText={text => setPassword(text)}
-                />
-                <MessageBox>...</MessageBox>
-                <StyledButton onPress={handleLogin}>
-                  <ButtonText>Login</ButtonText>
-                </StyledButton>
-                <Line />
-                <StyledButton onPress={() =>
-                  navigation.navigate("Signup")}>
-                    <ButtonText>Sign Up</ButtonText>
-                </StyledButton>
-              </StyledFormArea>
-            )}
-          </Formik>
-        </InnerContainer>
-      </Container>
-    </KeyboardAvoidingWrapper>
+        <Formik
+          initialValues={{ email: '', password: '' }}
+          onSubmit={(values) => {
+            console.log(values)
+          }}
+        >
+          {({ handleChange, handleBlur, handleSubmit, values }) => (
+            <StyledFormArea>
+              <TextInput
+                label='Email Address'
+                icon='mail'
+                placeholder='a@gmail.com'
+                placeholderTextColor={darkLight}
+                onBlur={handleBlur('email')}
+                keyboardType='email-address'
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+              />
+              <TextInput
+                label='Password'
+                icon='lock'
+                placeholder='*********'
+                placeholderTextColor={darkLight}
+                onBlur={handleBlur('password')}
+                secureTextEntry={hidePassword}
+                isPassword={true}
+                hidePassword={hidePassword}
+                setHidePassword={setHidePassword}
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+              />
+              <StyledButton style={{ marginTop: 30 }} onPress={handleLogin}>
+                <ButtonText>Login</ButtonText>
+              </StyledButton>
+              <Line />
+              <StyledButton onPress={() => navigation.navigate('Signup')}>
+                <ButtonText>Sign Up</ButtonText>
+              </StyledButton>
+            </StyledFormArea>
+          )}
+        </Formik>
+      </InnerContainer>
+    </Container>
   )
 }
 
