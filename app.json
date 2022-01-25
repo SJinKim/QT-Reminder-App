@@ -1,7 +1,9 @@
 {
   "expo": {
-    "name": "QT-App",
+    "name": "QT",
     "slug": "QT-App",
+    "privacy": "public",
+    "description": "manage your quiet time with count down",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,9 +15,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
